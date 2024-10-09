@@ -1,17 +1,24 @@
 import React from 'react'
 import { CldUploadWidget } from 'next-cloudinary';
-import { useState } from 'react';
+import { useState,createContext } from 'react';
 
-export default function EnviarImg() {
+export const Micontexto = createContext();
+
+export function EnviarImg({children}) {
  
-    const [resource, setResource] = useState();
+    const [resource, setResource] = useState({});
      return(
-    <CldUploadWidget
+      <>
+      <CldUploadWidget
     uploadPreset='next_cloudinary_app'
+    onSuccess={(results) => {
+      console.log(results.info)
+      setResource(results.info)
+    }}
     >
-      {({ open }) => {
+      {({ open , cloudinary, widget, result}) => {
         return (
-            <button onClick={() => open()}>
+            <button onClick={() => {open()}}>
               Upload an Image
             </button>
           );
@@ -20,4 +27,8 @@ export default function EnviarImg() {
         
       }}
     </CldUploadWidget>
+    <Micontexto.Provider value={{ value: resource, setvalor: setResource }}>
+    {children}
+      </ Micontexto.Provider>
+    </>
 )}
