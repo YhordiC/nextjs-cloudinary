@@ -9,12 +9,15 @@ export default function EnviarImg() {
     <CldUploadWidget
     uploadPreset='next_cloudinary_app'
     >
-      
+      {({ open }) => {
         return (
-            <button>
+            <button onClick={() => open()}>
               Upload an Image
             </button>
           );
           
+        
+        
+      }}
     </CldUploadWidget>
 )}
